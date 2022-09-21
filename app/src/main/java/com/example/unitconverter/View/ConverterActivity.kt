@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import com.example.unitconverter.R
 
+@AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
