@@ -3,11 +3,11 @@ package com.example.unitconverter.Data
 import com.example.unitconverter.R
 import com.sadellie.unitto.data.units.UnitGroup
 import java.math.BigDecimal
-import javax.inject.Singleton
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
-class UnitRepo @Inject constructor(){
+class UnitRepo @Inject constructor() {
     private val allUnits: List<Unit> by lazy {
         mapOfCollections.values.flatten()
     }
@@ -66,7 +66,7 @@ class UnitRepo @Inject constructor(){
             Unit(R.string.t, BigDecimal.valueOf(1.0E+3), UnitGroup.WEIGHT),
             Unit(R.string.lb, BigDecimal.valueOf(2.20462262185), UnitGroup.WEIGHT),
         )
-}
+    }
     private val speedCollection: List<Unit> by lazy {
         listOf(
 

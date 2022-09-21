@@ -11,6 +11,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import com.example.unitconverter.R
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class ConverterActivity : AppCompatActivity() {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         transaction.replace(R.id.fragment_keyboard, KeyboardFragment(), "Keyboard fragment" ).commit()
 
-        val units = resources.getStringArray(R.array.Units)
+        val units = resources.getStringArray(R.array.)
         val spinner = findViewById<Spinner>(R.id.spinnerInput)
         if (spinner != null) {
             val adapter = ArrayAdapter(this,
