@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import com.sadellie.unitto.data.units.UnitGroup
 import java.math.BigDecimal
 
-data class Unit(
+data class MyUnit(
     @StringRes val Name: Int,
     var multiplier: BigDecimal,
     val group: UnitGroup,

@@ -12,8 +12,8 @@ import com.example.unitconverter.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+//private const val ARG_PARAM1 = "param1"
+//private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -36,17 +36,18 @@ class KeyboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val myKeyboard = view.findViewById<MyKeyboard>(R.id.keyboard)
         val editText: EditText = requireActivity().findViewById(R.id.editTextInputDecimal)
         val inputConnection = editText.onCreateInputConnection(EditorInfo())
         myKeyboard.setInputConnection(inputConnection)
     }
-    companion object
+    /*companion object
     {
         @JvmStatic
         fun newInstance(param1: String, param2: String){
 
         }
-    }
+    }*/
 
 }
