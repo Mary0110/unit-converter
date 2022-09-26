@@ -2,20 +2,18 @@ package com.example.unitconverter.View
 
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.unitconverter.Data.UnitRepo
 import com.example.unitconverter.R
 import com.example.unitconverter.ViewModel.MainViewModel
 import java.lang.reflect.Field
-import java.math.BigDecimal
 
 
 class ConverterActivity : AppCompatActivity() {
@@ -35,7 +33,7 @@ class ConverterActivity : AppCompatActivity() {
         transaction.replace(R.id.fragment_keyboard, KeyboardFragment(), "Keyboard fragment")
             .commit()
 
-        unitGroupResArr = getIntent().getIntExtra("unitGroupName", 0)
+        unitGroupResArr = intent.getIntExtra("unitGroupName", 0)
 
         val unitArrSpinner = resources.getStringArray(unitGroupResArr)
 
@@ -99,13 +97,27 @@ class ConverterActivity : AppCompatActivity() {
         }
 
         val editText = findViewById<EditText>(R.id.editTextInputDecimal)
-        mainViewModel.valueFrom.value = BigDecimal(editText.text.toString())
+        val textView = findViewById<View>(R.id.textViewOutputDecimal) as TextView
+        editText.addTextChangedListener(object : TextWatcher {
 
-        val textView = findViewById<TextView>(R.id.textViewOutputDecimal)
-        mainViewModel.valueTo.value = BigDecimal(textView.text.toString())
+            override fun afterTextChanged(s: Editable) {
+                mainViewModel.convert()
 
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                mainViewModel.valueFrom.value = (s.toString()).toBigDecimal()
+            }
+        })
+        mainViewModel.valueTo.observe(this, Observer{
+            textView.text = it.toPlainString()
+        })
     }
-    //TODO: where to place this function??????????
 
     fun getStringResourceId(stringToSearch: String): Int {
         val fields: Array<Field> = R.string::class.java.fields

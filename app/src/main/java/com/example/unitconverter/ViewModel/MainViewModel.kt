@@ -12,9 +12,12 @@ class MainViewModel : ViewModel() {
     var unitFrom :MutableLiveData<MyUnit> = MutableLiveData()
     var unitTo : MutableLiveData<MyUnit> = MutableLiveData()
 
+    fun onInputValueChanged(){
+
+    }
     fun convert(){
         if(unitTo.value!!.group == unitFrom.value!!.group){
-            var diff = unitTo.value!!.multiplier.divide(unitFrom.value!!.multiplier)
+            var diff = unitFrom.value!!.multiplier.divide(unitTo.value!!.multiplier)
             valueTo.value = valueFrom.value!!.multiply(diff)
         }
     }

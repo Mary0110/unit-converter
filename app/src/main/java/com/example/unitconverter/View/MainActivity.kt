@@ -9,7 +9,7 @@ import com.example.unitconverter.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme_NoActionBar);
+        setTheme(R.style.AppTheme_NoActionBar)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
