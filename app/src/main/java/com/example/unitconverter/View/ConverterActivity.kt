@@ -130,7 +130,12 @@ class ConverterActivity : AppCompatActivity() {
             }
         })
         mainViewModel.valueTo.observe(this, Observer {
+            if(editText.text.toString() == "") {
+                textView.text = ""
+            }
+            else {
                 textView.text = it.toPlainString()
+            }
         })
     }
 
