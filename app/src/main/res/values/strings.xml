@@ -23,8 +23,7 @@
         <item key = "m/h">@string/m_per_h</item>
         <item key = "f/s">@string/f_per_s</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--string name="hello_blank_fragment">Hello blank fragment</string-->
     <string name="cm">centimeter</string>
     <string name="m">meter</string>
     <string name="km">kilometer</string>

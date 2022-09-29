@@ -115,6 +115,7 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
 
         // Delete text or input key value
         // All communication goes through the InputConnection
+        //TODO: delete button delimiter exception
         if (v.getId() == R.id.button_delete) {
             val selectedText = iConnection!!.getSelectedText(0)
             if (TextUtils.isEmpty(selectedText)) {

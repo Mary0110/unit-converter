@@ -22,28 +22,11 @@ object UnitRepo {
         )
     }
 
-    /**
-     * Get [AbstractUnit] by specified id from [MyUnitIDS].
-     *
-     * @param unitId Unit id from [MyUnitIDS]. Don't use literal strings here.
-     * @return [AbstractUnit] from [AllUnitsRepository.allUnits] that has the given id.
-     * @throws NoSuchElementException If there is no [AbstractUnit] in [AllUnitsRepository.allUnits]
-     * that has the requested unitId.
-     */
     fun getById(nameStr: Int): MyUnit
     {
         return allMyUnits.first { ((it.Name)) == nameStr }
     }
 
-    /**
-     * Looks for a collection of units of the given [UnitGroup].
-     *
-     * @param unitGroup Requested [UnitGroup]
-     * @return List of [AbstractUnit]s. Will return null if the is no collection for the specified
-     * [UnitGroup].
-     *
-     * @throws [NoSuchElementException] from [Map.getValue]
-     */
     fun getCollectionByGroup(unitGroup: UnitGroup): List<MyUnit> {
         return mapOfCollections.getValue(unitGroup)
     }

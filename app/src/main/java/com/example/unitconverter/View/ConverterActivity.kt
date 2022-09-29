@@ -4,6 +4,7 @@ package com.example.unitconverter.View
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import com.example.unitconverter.Data.UnitRepo
 import com.example.unitconverter.R
 import com.example.unitconverter.ViewModel.MainViewModel
 import java.lang.reflect.Field
+import java.math.BigDecimal
 
 
 class ConverterActivity : AppCompatActivity() {
@@ -24,7 +26,7 @@ class ConverterActivity : AppCompatActivity() {
     //lateinit var utility: Utility
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_converter)
+        val view = setContentView(R.layout.activity_converter)
 
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
@@ -48,22 +50,23 @@ class ConverterActivity : AppCompatActivity() {
             spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
+                    parent: AdapterView<*>?,
+                    view: View?,
                     position: Int,
                     id: Long
                 ) {
 
-                    mainViewModel.unitFrom.value = UnitRepo.getById(getStringResourceId(unitArrSpinner[position] ))
+                    mainViewModel.setUnitFrom(UnitRepo.getById(getStringResourceId(unitArrSpinner[position])))
 
-                /*Toast.makeText(this@ConverterActivity,
+                    /*Toast.makeText(this@ConverterActivity,
                             getString(R.string.selected_item) + " " +
                                     "" + units[position], Toast.LENGTH_SHORT).show()*/
                 }
 
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
-                    // write code to perform some action
+                    //Log.d("debug rotat error", "inside nothing selected")
+                // write code to perform some action
                 }
             }
         }
@@ -78,10 +81,12 @@ class ConverterActivity : AppCompatActivity() {
             spinner2.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View, position: Int, id: Long
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
                 ) {
-                    mainViewModel.unitTo.value = UnitRepo.getById(getStringResourceId(unitArrSpinner[position] ))
+                    mainViewModel.setUnitTo(UnitRepo.getById(getStringResourceId(unitArrSpinner[position])))
 
                     /*Toast.makeText(
                         this@ConverterActivity,
@@ -98,6 +103,7 @@ class ConverterActivity : AppCompatActivity() {
 
         val editText = findViewById<EditText>(R.id.editTextInputDecimal)
         val textView = findViewById<View>(R.id.textViewOutputDecimal) as TextView
+
         editText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
@@ -105,19 +111,29 @@ class ConverterActivity : AppCompatActivity() {
 
             }
 
-            override fun beforeTextChanged(s: CharSequence, start: Int,
-                                           count: Int, after: Int) {
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
             }
 
-            override fun onTextChanged(s: CharSequence, start: Int,
-                                       before: Int, count: Int) {
-                mainViewModel.valueFrom.value = (s.toString()).toBigDecimal()
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+               // var str =
+               // var bd = BigDecimal.ZERO
+                //if(str != "")
+                //    bd = .toBigDecimal()
+
+                mainViewModel.setValueFrom(s.toString().toBigDecimal())
             }
         })
-        mainViewModel.valueTo.observe(this, Observer{
-            textView.text = it.toPlainString()
+        mainViewModel.valueTo.observe(this, Observer {
+                textView.text = it.toPlainString()
         })
     }
+
 
     fun getStringResourceId(stringToSearch: String): Int {
         val fields: Array<Field> = R.string::class.java.fields
@@ -133,4 +149,3 @@ class ConverterActivity : AppCompatActivity() {
 }
 
 
-    //private fun ConvertFromStringToNumber()
