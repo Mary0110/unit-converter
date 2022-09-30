@@ -1,6 +1,9 @@
 package com.example.unitconverter.View
 
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -137,6 +140,12 @@ class ConverterActivity : AppCompatActivity() {
                 textView.text = it.toPlainString()
             }
         })
+
+        fun Context.copyToClipboard(text: CharSequence){
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("label",text)
+            clipboard.setPrimaryClip(clip)
+        }
     }
 
 
