@@ -3,11 +3,10 @@ package com.example.unitconverter.View
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -18,18 +17,19 @@ import com.example.unitconverter.Data.UnitRepo
 import com.example.unitconverter.R
 import com.example.unitconverter.ViewModel.MainViewModel
 import java.lang.reflect.Field
-import java.math.BigDecimal
 
 
 class ConverterActivity : AppCompatActivity() {
 
     var unitGroupResArr = R.array.distanceUnits
     lateinit var mainViewModel: MainViewModel
+    private var myClipboard: ClipboardManager? = null
+    private var myClip: ClipData? = null
 
     //lateinit var utility: Utility
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val view = setContentView(R.layout.activity_converter)
+        setContentView(R.layout.activity_converter)
 
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
@@ -124,14 +124,10 @@ class ConverterActivity : AppCompatActivity() {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-               // var str =
-               // var bd = BigDecimal.ZERO
-                //if(str != "")
-                //    bd = .toBigDecimal()
-
                 mainViewModel.setValueFrom(s.toString().toBigDecimal())
             }
         })
+
         mainViewModel.valueTo.observe(this, Observer {
             if(editText.text.toString() == "") {
                 textView.text = ""
@@ -141,11 +137,70 @@ class ConverterActivity : AppCompatActivity() {
             }
         })
 
-        fun Context.copyToClipboard(text: CharSequence){
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("label",text)
-            clipboard.setPrimaryClip(clip)
+
+        myClipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?;
+
+        /*val copyButton = findViewById<Button>(R.id.copyButton)
+        copyButton.setOnClickListener{
+            val textToCopy = editText.text
+            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("text", textToCopy)
+            clipboardManager.setPrimaryClip(clipData)
+            Toast.makeText(this, "Text copied to clipboard", Toast.LENGTH_LONG).show()
+        }*/
+        fun copyText() {
+            val sdk = Build.VERSION.SDK_INT
+            if (sdk < Build.VERSION_CODES.HONEYCOMB) {
+                val clipboard = getSystemService(CLIPBOARD_SERVICE) as android.text.ClipboardManager
+                clipboard.text = textView.text.toString()
+            } else {
+                val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("text label", textView.text)
+                clipboard.setPrimaryClip(clip)
+            }
+            Toast.makeText(this, "Text Copied", Toast.LENGTH_SHORT).show();
         }
+
+        // on click paste button
+        fun pasteText() {
+            val abc = myClipboard?.getPrimaryClip()
+            val item = abc?.getItemAt(0)
+
+            editText.setText(item?.text.toString())
+
+            Toast.makeText(applicationContext, "Text Pasted", Toast.LENGTH_SHORT).show()
+        }
+
+        val pasteButton = findViewById<Button>(R.id.pasteButton)
+        pasteButton.setOnClickListener {
+           pasteText()
+        }
+
+        val copyButton = findViewById<Button>(R.id.copyButton)
+        copyButton.setOnClickListener {
+            copyText()
+        }
+
+        val swapButton = findViewById<Button>(R.id.swapButton)
+        swapButton.setOnClickListener {
+            mainViewModel.swap()
+
+        }
+
+        mainViewModel.unitTo.observe(this, Observer{
+            val myStr =
+            val position: Int = spinner.adapter.getPosition("centimeter")
+                spinner.setSelection(position)
+        })
+        val myString = "some value" //the value you want the position for
+
+
+        val spinnerPosition = mySpinner.getAdapter().getPosition(myString)
+
+//set the default according to value
+
+//set the default according to value
+        spinner.setSelection(spinnerPosition)
     }
 
 

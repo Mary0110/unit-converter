@@ -11,9 +11,6 @@ object UnitRepo {
         mapOfCollections.values.flatten()
     }
 
-    /**
-     * Mapped [UnitGroup] to [List] of [AbstractUnit]s.
-     */
     private val mapOfCollections by lazy {
         hashMapOf(
             UnitGroup.DISTANCE to distanceCollection,

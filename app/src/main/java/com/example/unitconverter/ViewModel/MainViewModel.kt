@@ -11,8 +11,8 @@ class MainViewModel : ViewModel() {
     private var valueFrom: MutableLiveData<BigDecimal> = MutableLiveData()
     var valueTo: MutableLiveData<BigDecimal> = MutableLiveData()
 
-    private var unitFrom: MutableLiveData<MyUnit> = MutableLiveData()
-    private var unitTo: MutableLiveData<MyUnit> = MutableLiveData()
+    var unitFrom: MutableLiveData<MyUnit> = MutableLiveData()
+    var unitTo: MutableLiveData<MyUnit> = MutableLiveData()
 
     init {
         valueFrom.value = BigDecimal.ZERO
@@ -48,5 +48,12 @@ class MainViewModel : ViewModel() {
             return valueTo.value
         }
         return BigDecimal.ZERO
+    }
+
+    fun swap() {
+        var unit = unitFrom
+        unitFrom = unitTo
+        unitTo = unit
+        convert()
     }
 }
