@@ -33,7 +33,7 @@
 
             <EditText
                 android:id="@+id/editTextInputDecimal"
-                android:layout_width="294dp"
+                android:layout_width="250dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
@@ -51,8 +51,6 @@
                 android:id="@+id/spinnerInput"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/editTextInputDecimal"
@@ -87,7 +85,7 @@
 
             <TextView
                 android:id="@+id/textViewOutputDecimal"
-                android:layout_width="294dp"
+                android:layout_width="250dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
@@ -103,8 +101,6 @@
                 android:id="@+id/spinnerOutput"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textViewOutputDecimal"

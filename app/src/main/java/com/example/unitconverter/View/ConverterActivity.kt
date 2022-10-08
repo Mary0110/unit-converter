@@ -17,6 +17,7 @@ import com.example.unitconverter.Data.UnitRepo
 import com.example.unitconverter.R
 import com.example.unitconverter.ViewModel.MainViewModel
 import java.lang.reflect.Field
+import java.math.BigDecimal
 
 
 class ConverterActivity : AppCompatActivity() {
@@ -124,7 +125,14 @@ class ConverterActivity : AppCompatActivity() {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                mainViewModel.setValueFrom(s.toString().toBigDecimal())
+                val str = s.toString()
+                val convertedNum =
+                    if (str.isEmpty())
+                        BigDecimal("0")
+                    else
+                        BigDecimal(str)
+
+                mainViewModel.setValueFrom(convertedNum)
             }
         })
 
@@ -184,23 +192,26 @@ class ConverterActivity : AppCompatActivity() {
         val swapButton = findViewById<Button>(R.id.swapButton)
         swapButton.setOnClickListener {
             mainViewModel.swap()
+            val spinner1Index: Int = spinner.getSelectedItemPosition()
+            spinner.setSelection(spinner2.selectedItemPosition)
+            spinner2.setSelection(spinner1Index)
 
         }
 
-        mainViewModel.unitTo.observe(this, Observer{
+       /* mainViewModel.unitTo.observe(this, Observer{
             val myStr =
             val position: Int = spinner.adapter.getPosition("centimeter")
                 spinner.setSelection(position)
-        })
+        })*/
         val myString = "some value" //the value you want the position for
 
 
-        val spinnerPosition = mySpinner.getAdapter().getPosition(myString)
+        //val spinnerPosition = mySpinner.getAdapter().getPosition(myString)
 
 //set the default according to value
 
 //set the default according to value
-        spinner.setSelection(spinnerPosition)
+      //  spinner.setSelection(spinnerPosition)
     }
 
 
