@@ -24,17 +24,17 @@
         <item key = "f/s">@string/f_per_s</item>
     </string-array>
     <!--string name="hello_blank_fragment">Hello blank fragment</string-->
-    <string name="cm">centimeter</string>
-    <string name="m">meter</string>
-    <string name="km">kilometer</string>
-    <string name="mm">millimeter</string>
-    <string name="kg">kilogram</string>
-    <string name="g">gram</string>
-    <string name="t">tone</string>
-    <string name="lb">pound</string>
-    <string name="km_per_h">kilometers/hour</string>
-    <string name="m_per_s">meters/second</string>
-    <string name="m_per_h">miles/hour</string>
-    <string name="f_per_s">foot/second</string>
+    <string name="cm">cm</string>
+    <string name="m">m</string>
+    <string name="km">km</string>
+    <string name="mm">mm</string>
+    <string name="kg">km</string>
+    <string name="g">g</string>
+    <string name="t">t</string>
+    <string name="lb">p</string>
+    <string name="km_per_h">km/h</string>
+    <string name="m_per_s">m/s</string>
+    <string name="m_per_h">mil/h</string>
+    <string name="f_per_s">f/s</string>
     <string name="swap">swap</string>
 </resources>
