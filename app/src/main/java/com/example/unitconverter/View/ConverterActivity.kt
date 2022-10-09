@@ -3,11 +3,16 @@ package com.example.unitconverter.View
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
+import android.view.View.OnFocusChangeListener
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
@@ -74,6 +79,7 @@ class ConverterActivity : AppCompatActivity() {
                 }
             }
         }
+
         val spinner2 = findViewById<Spinner>(R.id.spinnerOutput)
         if (spinner2 != null) {
             val adapter = ArrayAdapter(
@@ -108,6 +114,17 @@ class ConverterActivity : AppCompatActivity() {
         val editText = findViewById<EditText>(R.id.editTextInputDecimal)
         val textView = findViewById<View>(R.id.textViewOutputDecimal) as TextView
 
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            editText!!.showSoftInputOnFocus = false
+        } else if (Build.VERSION.SDK_INT >= 11) {
+            editText!!.setRawInputType(InputType.TYPE_CLASS_TEXT)
+            editText!!.setTextIsSelectable(true)
+        } else {
+            editText!!.setRawInputType(InputType.TYPE_NULL)
+
+            editText!!.isFocusable = true
+        }
         editText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
@@ -226,6 +243,7 @@ class ConverterActivity : AppCompatActivity() {
         }
         return -1
     }
+
 }
 
 
