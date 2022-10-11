@@ -111,8 +111,9 @@ class ConverterActivity : AppCompatActivity() {
         val editText = findViewById<EditText>(R.id.editTextInputDecimal)
         val textView = findViewById<View>(R.id.textViewOutputDecimal) as TextView
         textView.movementMethod = ScrollingMovementMethod()
+        editText.maxLines = 1
+        editText.isVerticalScrollBarEnabled = true
         editText.movementMethod = ScrollingMovementMethod()
-
 
 
         if (Build.VERSION.SDK_INT >= 21) {
