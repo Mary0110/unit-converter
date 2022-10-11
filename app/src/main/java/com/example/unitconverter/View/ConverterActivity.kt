@@ -23,7 +23,8 @@ import com.example.unitconverter.R
 import com.example.unitconverter.ViewModel.MainViewModel
 import java.lang.reflect.Field
 import java.math.BigDecimal
-
+import javax.validation.constraints.DecimalMin
+import javax.validation.constraints.Digits
 
 class ConverterActivity : AppCompatActivity() {
 
@@ -143,8 +144,9 @@ class ConverterActivity : AppCompatActivity() {
                 before: Int, count: Int
             ) {
                 val str = s.toString()
-                val convertedNum =
-                    if (str.isEmpty())
+
+                val convertedNum : BigDecimal =
+                    if (str.isEmpty() || str.toBigDecimalOrNull() == null)
                         BigDecimal("0")
                     else
                         BigDecimal(str)
@@ -190,10 +192,19 @@ class ConverterActivity : AppCompatActivity() {
         fun pasteText() {
             val abc = myClipboard?.getPrimaryClip()
             val item = abc?.getItemAt(0)
+            val itemStr = item?.text.toString()
+            if(itemStr.toBigDecimalOrNull() != null) {
+                editText.setText(itemStr)
+                Toast.makeText(applicationContext, "Number pasted", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(
+                    applicationContext,
+                    "Not allowed format to paste number",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
-            editText.setText(item?.text.toString())
-
-            Toast.makeText(applicationContext, "Text Pasted", Toast.LENGTH_SHORT).show()
         }
 
         val pasteButton = findViewById<Button>(R.id.pasteButton)
