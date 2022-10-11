@@ -3,16 +3,13 @@ package com.example.unitconverter.View
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.view.View
-import android.view.View.OnFocusChangeListener
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
@@ -23,8 +20,7 @@ import com.example.unitconverter.R
 import com.example.unitconverter.ViewModel.MainViewModel
 import java.lang.reflect.Field
 import java.math.BigDecimal
-import javax.validation.constraints.DecimalMin
-import javax.validation.constraints.Digits
+
 
 class ConverterActivity : AppCompatActivity() {
 
@@ -114,6 +110,9 @@ class ConverterActivity : AppCompatActivity() {
 
         val editText = findViewById<EditText>(R.id.editTextInputDecimal)
         val textView = findViewById<View>(R.id.textViewOutputDecimal) as TextView
+        textView.movementMethod = ScrollingMovementMethod()
+        editText.movementMethod = ScrollingMovementMethod()
+
 
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -167,14 +166,6 @@ class ConverterActivity : AppCompatActivity() {
 
         myClipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?;
 
-        /*val copyButton = findViewById<Button>(R.id.copyButton)
-        copyButton.setOnClickListener{
-            val textToCopy = editText.text
-            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText("text", textToCopy)
-            clipboardManager.setPrimaryClip(clipData)
-            Toast.makeText(this, "Text copied to clipboard", Toast.LENGTH_LONG).show()
-        }*/
         fun copyText() {
             val sdk = Build.VERSION.SDK_INT
             if (sdk < Build.VERSION_CODES.HONEYCOMB) {
@@ -195,7 +186,10 @@ class ConverterActivity : AppCompatActivity() {
             val itemStr = item?.text.toString()
             if(itemStr.toBigDecimalOrNull() != null) {
                 editText.setText(itemStr)
-                Toast.makeText(applicationContext, "Number pasted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext, "Number pasted",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             else {
                 Toast.makeText(
@@ -225,21 +219,6 @@ class ConverterActivity : AppCompatActivity() {
             spinner2.setSelection(spinner1Index)
 
         }
-
-       /* mainViewModel.unitTo.observe(this, Observer{
-            val myStr =
-            val position: Int = spinner.adapter.getPosition("centimeter")
-                spinner.setSelection(position)
-        })*/
-        val myString = "some value" //the value you want the position for
-
-
-        //val spinnerPosition = mySpinner.getAdapter().getPosition(myString)
-
-//set the default according to value
-
-//set the default according to value
-      //  spinner.setSelection(spinnerPosition)
     }
 
 
