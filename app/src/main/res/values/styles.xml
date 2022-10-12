@@ -13,7 +13,6 @@
     <!-- Splash screen theme -->
     <style name="splashScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/logo</item>
-
     </style>
 
     <!-- Main Activity theme. -->
