@@ -44,16 +44,16 @@ object UnitRepo {
             MyUnit(R.string.kg, BigDecimal.valueOf(1.0), UnitGroup.WEIGHT),
             MyUnit(R.string.g, BigDecimal.valueOf(1.0E-3), UnitGroup.WEIGHT),
             MyUnit(R.string.t, BigDecimal.valueOf(1.0E+3), UnitGroup.WEIGHT),
-            MyUnit(R.string.lb, BigDecimal.valueOf(2.20462262185), UnitGroup.WEIGHT),
+            //MyUnit(R.string.lb, BigDecimal.valueOf(2.20462262185), UnitGroup.WEIGHT),
         )
     }
     private val speedCollection: List<MyUnit> by lazy {
         listOf(
 
-            MyUnit(R.string.km_per_h, BigDecimal.valueOf(3.6), UnitGroup.SPEED),
-            MyUnit(R.string.m_per_h, BigDecimal.valueOf(2.236936), UnitGroup.SPEED),
-            MyUnit(R.string.m_per_s, BigDecimal.valueOf(1.0), UnitGroup.SPEED),
-            MyUnit(R.string.f_per_s, BigDecimal.valueOf(3.28084), UnitGroup.SPEED),
+            MyUnit(R.string.km_per_s, BigDecimal.valueOf(1.0E+3), UnitGroup.SPEED),
+            MyUnit(R.string.cm_per_s, BigDecimal.valueOf(1.0), UnitGroup.SPEED),
+            MyUnit(R.string.m_per_s, BigDecimal.valueOf(1.0E+2), UnitGroup.SPEED),
+           // MyUnit(R.string.f_per_s, BigDecimal.valueOf(3.28084), UnitGroup.SPEED),
         )
     }
 }

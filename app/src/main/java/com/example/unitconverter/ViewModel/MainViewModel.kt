@@ -5,12 +5,12 @@ import androidx.lifecycle.ViewModel
 import com.example.unitconverter.Data.MyUnit
 import java.math.BigDecimal
 import java.math.RoundingMode
-
+import javax.validation.constraints.Digits
 
 
 class MainViewModel : ViewModel() {
 
-
+    //@Digits(integer=3, fraction=2)
     private var valueFrom: MutableLiveData<BigDecimal> = MutableLiveData()
     var valueTo: MutableLiveData<BigDecimal> = MutableLiveData()
 

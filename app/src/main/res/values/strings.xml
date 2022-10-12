@@ -15,26 +15,26 @@
         <item key = "kg">@string/kg</item>
         <item key = "g">@string/g</item>
         <item key = "t">@string/t</item>
-        <item key = "lb">@string/lb</item>
+        <!--item key = "lb">@string/lb</item-->
     </string-array>
     <string-array name="speedUnits">
-        <item key = "km/h">@string/km_per_h</item>
+        <item key = "km/s">@string/km_per_s</item>
         <item key = "m/s">@string/m_per_s</item>
-        <item key = "m/h">@string/m_per_h</item>
-        <item key = "f/s">@string/f_per_s</item>
+        <item key = "cm/s">@string/cm_per_s</item>
+        <!--item key = "f/s">@string/f_per_s</item-->
     </string-array>
     <!--string name="hello_blank_fragment">Hello blank fragment</string-->
     <string name="cm">cm</string>
     <string name="m">m</string>
     <string name="km">km</string>
     <string name="mm">mm</string>
-    <string name="kg">km</string>
+    <string name="kg">kg</string>
     <string name="g">g</string>
     <string name="t">t</string>
     <string name="lb">p</string>
-    <string name="km_per_h">km/h</string>
+    <string name="km_per_s">km/s</string>
     <string name="m_per_s">m/s</string>
-    <string name="m_per_h">mil/h</string>
-    <string name="f_per_s">f/s</string>
+    <string name="cm_per_s">cm/s</string>
+    <!--string name="f_per_s">f/s</string-->
     <string name="swap">swap</string>
 </resources>
