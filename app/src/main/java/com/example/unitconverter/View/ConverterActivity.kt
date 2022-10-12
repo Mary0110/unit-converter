@@ -126,6 +126,7 @@ class ConverterActivity : AppCompatActivity() {
 
             editText!!.isFocusable = true
         }
+
         editText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {

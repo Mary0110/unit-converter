@@ -6,7 +6,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.unitconverter.R
 import java.lang.reflect.Field
-//TODO: vse h
+//TODO: vse h...
 object Utility {
 
     fun hideKeyboard(activity: Activity) {
