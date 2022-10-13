@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputConnection
 import android.widget.Button
 import android.widget.LinearLayout
@@ -32,7 +33,7 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     private var mButton0: Button? = null
     private var mButtonDelete: Button? = null
     private var mButtonDot: Button? = null
-    //private var mEditText: EditText = null
+
     // This will map the button resource id to the String value that we want to
     // input when that button is clicked.
     var keyValues = SparseArray<String>()
@@ -41,7 +42,6 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     // Our communication link to the EditText
     private fun init(context: Context?, attrs: AttributeSet?) {
 
-        // initialize buttons
         LayoutInflater.from(context).inflate(R.layout.keyboard, this, true)
         mButton1 = findViewById<View>(R.id.button_1) as Button
         mButton2 = findViewById<View>(R.id.button_2) as Button
@@ -70,6 +70,8 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         mButtonDelete!!.setOnClickListener(this)
         mButtonDot!!.setOnClickListener(this)
 
+        mButtonDot?.isClickable = false
+
         // map buttons IDs to input strings
         keyValues.put(R.id.button_1, "1")
         keyValues.put(R.id.button_2, "2")
@@ -85,49 +87,47 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     }
 
 
-    /*private val keyPadListener: OnClickListener = OnClickListener { view ->
-        when (view.id) {
-            R.id.button_delete-> inputConnection?.delete()
-            else -> {
-                val value = (view as? TextView)?.text
-                inputConnection?.commitText(value, 1)
-            }
-        }
-    }
-
-    private fun InputConnection.delete() {
-        if (getSelectedText(0).isNullOrBlank()) {
-            deleteSurroundingText(1, 0)
-        } else {
-            commitText("", 1)
-        }
-    }*/
-    // The activity (or some parent or controller) must give us
-    // a reference to the current EditText's InputConnection
-    /*fun setInputConnection(ic: InputConnection?) {
-         iConnection = ic
-    }*/
-
     override fun onClick(v: View) {
 
         // do nothing if the InputConnection has not been set yet
         if (iConnection == null) return
+       // if(iConnection!!.getTextBeforeCursor(1,0 ) == "")
+           // mButtonDot?.isClickable = false
+
+
 
         // Delete text or input key value
         // All communication goes through the InputConnection
-        //TODO: delete button delimiter exception
-        if (v.getId() == R.id.button_delete) {
+        if (v.id == R.id.button_delete) {
             val selectedText = iConnection!!.getSelectedText(0)
             if (TextUtils.isEmpty(selectedText)) {
                 // no selection, so delete previous character
                 iConnection!!.deleteSurroundingText(1, 0)
+                if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))
+                    buttonAccessible(mButtonDot,false)
             } else {
                 // delete the selection
                 iConnection!!.commitText("", 1)
+                if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))
+                    buttonAccessible(mButtonDot,false)
             }
-        } else {
-            val value = keyValues[v.getId()]
+        }
+
+        else {
+            val value = keyValues[v.id]
+            val currentText: CharSequence =
+                iConnection!!.getExtractedText(ExtractedTextRequest(), 0).text
+
+            if(currentText == "0"){
+                iConnection!!.deleteSurroundingText(1, 0)
+                if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))
+                    buttonAccessible(mButtonDot,false)
+            }
+
+
             iConnection!!.commitText(value, 1)
+            buttonAccessible(mButtonDot,true)
+
         }
     }
 
@@ -139,5 +139,10 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
 
     init {
         init(context, attrs)
+    }
+
+    private fun buttonAccessible(button: Button?, b:Boolean)
+    {
+        button?.isClickable = b
     }
 }

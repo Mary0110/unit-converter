@@ -9,6 +9,9 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.ScrollingMovementMethod
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -115,6 +118,20 @@ class ConverterActivity : AppCompatActivity() {
         editText.isVerticalScrollBarEnabled = true
         editText.movementMethod = ScrollingMovementMethod()
 
+        editText.customSelectionActionModeCallback = object : ActionMode.Callback {
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                return false
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {}
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                return false
+            }
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                return false
+            }
+        }
 
         if (Build.VERSION.SDK_INT >= 21) {
             editText!!.showSoftInputOnFocus = false
@@ -138,6 +155,7 @@ class ConverterActivity : AppCompatActivity() {
                 s: CharSequence, start: Int,
                 count: Int, after: Int
             ) {
+
             }
 
             override fun onTextChanged(
@@ -145,7 +163,8 @@ class ConverterActivity : AppCompatActivity() {
                 before: Int, count: Int
             ) {
                 val str = s.toString()
-
+                //if (str == ".")
+                 //   editText.setText( "0")
                 val convertedNum : BigDecimal =
                     if (str.isEmpty() || str.toBigDecimalOrNull() == null)
                         BigDecimal("0")
@@ -178,7 +197,7 @@ class ConverterActivity : AppCompatActivity() {
                 val clip = ClipData.newPlainText("text label", textView.text)
                 clipboard.setPrimaryClip(clip)
             }
-            Toast.makeText(this, "Text Copied", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nuber Copied", Toast.LENGTH_SHORT).show();
         }
 
         // on click paste button
@@ -188,6 +207,7 @@ class ConverterActivity : AppCompatActivity() {
             val itemStr = item?.text.toString()
             if(itemStr.toBigDecimalOrNull() != null) {
                 editText.setText(itemStr)
+                editText.setSelection(editText.length())
                 Toast.makeText(
                     applicationContext, "Number pasted",
                     Toast.LENGTH_SHORT
@@ -196,7 +216,7 @@ class ConverterActivity : AppCompatActivity() {
             else {
                 Toast.makeText(
                     applicationContext,
-                    "Not allowed format to paste number",
+                    "Not allowed format to paste",
                     Toast.LENGTH_SHORT
                 ).show()
             }
