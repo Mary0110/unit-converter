@@ -90,12 +90,13 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     }
 
     override fun onLongClick(v: View?): Boolean {
-        if (iConnection == null) return false
+        if (iConnection == null)
+            return false
         val Text = iConnection!!.getExtractedText(ExtractedTextRequest(), 0).text
-
-          iConnection!!.deleteSurroundingText(Text.length, 0)
+        iConnection!!.deleteSurroundingText(Text.length, 0)
         return true
     }
+
     override fun onClick(v: View) {
 
         // do nothing if the InputConnection has not been set yet
@@ -109,7 +110,7 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         // All communication goes through the InputConnection
         if (v.id == R.id.button_delete) {
             val selectedText = iConnection!!.getSelectedText(0)
-            if (TextUtils.isEmpty(selectedText)) {
+            if (TextUtils.isEmpty(selectedText) ) {
                 // no selection, so delete previous character
                 iConnection!!.deleteSurroundingText(1, 0)
                 if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))
@@ -126,7 +127,9 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
             val value = keyValues[v.id]
             val currentText: CharSequence =
                 iConnection!!.getExtractedText(ExtractedTextRequest(), 0).text
-
+            if(!TextUtils.isEmpty(iConnection!!.getExtractedText(ExtractedTextRequest(),0).text) &&
+                        TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)) )
+                buttonAccessible(mButton0, false)
             if(currentText == "0" && value != "."){
                 iConnection!!.deleteSurroundingText(1, 0)
                 if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))

@@ -139,6 +139,9 @@ class ConverterActivity : AppCompatActivity() {
         editText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
+                if(editText.text.length >= 2 && editText.text.toString().substring(1, 2) != "." && editText.text.toString().startsWith("0") && editText.text.toString() != "0")
+                    editText.setText(editText.text.toString().substring(1,editText.text.toString().length))
+
                 mainViewModel.convert()
 
             }
@@ -156,8 +159,11 @@ class ConverterActivity : AppCompatActivity() {
             ) {
 
                 val str = s.toString()
+
                 if (editText.text.toString() == ".")
                     editText.setText(editText.text.toString().substring(0,editText.text.toString().length-1))
+                else if(editText.text.toString().startsWith("."))
+                    editText.setText('0'.plus(editText.text.toString()))
                 val convertedNum : BigDecimal =
                     if (str.isEmpty() || str.toBigDecimalOrNull() == null)
                         BigDecimal("0")
