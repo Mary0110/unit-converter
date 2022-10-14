@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.text.method.ScrollingMovementMethod
 import android.view.ActionMode
@@ -64,12 +65,7 @@ class ConverterActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-
                     mainViewModel.setUnitFrom(UnitRepo.getById(getStringResourceId(unitArrSpinner[position])))
-
-                    /*Toast.makeText(this@ConverterActivity,
-                            getString(R.string.selected_item) + " " +
-                                    "" + units[position], Toast.LENGTH_SHORT).show()*/
                 }
 
 
@@ -97,12 +93,6 @@ class ConverterActivity : AppCompatActivity() {
                     id: Long
                 ) {
                     mainViewModel.setUnitTo(UnitRepo.getById(getStringResourceId(unitArrSpinner[position])))
-
-                    /*Toast.makeText(
-                        this@ConverterActivity,
-                        getString(R.string.selected_item) + " " +
-                                "" + unitArrSpinner[position], Toast.LENGTH_SHORT
-                    ).show()*/
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -112,13 +102,15 @@ class ConverterActivity : AppCompatActivity() {
         }
 
         val editText = findViewById<EditText>(R.id.editTextInputDecimal)
+       // editText.inputType = InputType.su
+       // editText.setOnClickListener(View.OnClickListener { editText.clearFocus() })
         val textView = findViewById<View>(R.id.textViewOutputDecimal) as TextView
         textView.movementMethod = ScrollingMovementMethod()
         editText.maxLines = 1
         editText.isVerticalScrollBarEnabled = true
         editText.movementMethod = ScrollingMovementMethod()
 
-        editText.customSelectionActionModeCallback = object : ActionMode.Callback {
+        /*editText.customSelectionActionModeCallback = object : ActionMode.Callback {
             override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                 return false
             }
@@ -131,7 +123,7 @@ class ConverterActivity : AppCompatActivity() {
             override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                 return false
             }
-        }
+        }*/
 
         if (Build.VERSION.SDK_INT >= 21) {
             editText!!.showSoftInputOnFocus = false
@@ -162,9 +154,10 @@ class ConverterActivity : AppCompatActivity() {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
+
                 val str = s.toString()
-                //if (str == ".")
-                 //   editText.setText( "0")
+                if (editText.text.toString() == ".")
+                    editText.setText(editText.text.toString().substring(0,editText.text.toString().length-1))
                 val convertedNum : BigDecimal =
                     if (str.isEmpty() || str.toBigDecimalOrNull() == null)
                         BigDecimal("0")
@@ -189,15 +182,22 @@ class ConverterActivity : AppCompatActivity() {
 
         fun copyText() {
             val sdk = Build.VERSION.SDK_INT
-            if (sdk < Build.VERSION_CODES.HONEYCOMB) {
-                val clipboard = getSystemService(CLIPBOARD_SERVICE) as android.text.ClipboardManager
-                clipboard.text = textView.text.toString()
-            } else {
-                val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText("text label", textView.text)
-                clipboard.setPrimaryClip(clip)
+            val targetText = textView.text
+            if(!TextUtils.isEmpty(targetText)){
+                if (sdk < Build.VERSION_CODES.HONEYCOMB) {
+                    val clipboard = getSystemService(CLIPBOARD_SERVICE) as android.text.ClipboardManager
+                    clipboard.text = targetText.toString()
+                } else {
+                    val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip = ClipData.newPlainText("text label", targetText )
+                    clipboard.setPrimaryClip(clip)
+                }
+                Toast.makeText(this, "Number copied, dear user)", Toast.LENGTH_SHORT).show();
             }
-            Toast.makeText(this, "Nuber Copied", Toast.LENGTH_SHORT).show();
+            else{
+                Toast.makeText(this, "Nothing to copy, idiot!", Toast.LENGTH_SHORT).show();
+
+            }
         }
 
         // on click paste button

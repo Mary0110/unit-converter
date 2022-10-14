@@ -15,7 +15,7 @@ import com.example.unitconverter.R
 
 
 class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
-    LinearLayout(context, attrs, defStyleAttr), View.OnClickListener {
+    LinearLayout(context, attrs, defStyleAttr), View.OnClickListener, View.OnLongClickListener {
     // constructors
     constructor(context: Context?) : this(context, null, 0) {}
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0) {}
@@ -70,6 +70,7 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         mButtonDelete!!.setOnClickListener(this)
         mButtonDot!!.setOnClickListener(this)
 
+        mButtonDelete!!.setOnLongClickListener(this)
         mButtonDot?.isClickable = false
 
         // map buttons IDs to input strings
@@ -84,9 +85,17 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         keyValues.put(R.id.button_9, "9")
         keyValues.put(R.id.button_0, "0")
         keyValues.put(R.id.button_dot, ".")
+
+
     }
 
+    override fun onLongClick(v: View?): Boolean {
+        if (iConnection == null) return false
+        val Text = iConnection!!.getExtractedText(ExtractedTextRequest(), 0).text
 
+          iConnection!!.deleteSurroundingText(Text.length, 0)
+        return true
+    }
     override fun onClick(v: View) {
 
         // do nothing if the InputConnection has not been set yet
@@ -118,7 +127,7 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
             val currentText: CharSequence =
                 iConnection!!.getExtractedText(ExtractedTextRequest(), 0).text
 
-            if(currentText == "0"){
+            if(currentText == "0" && value != "."){
                 iConnection!!.deleteSurroundingText(1, 0)
                 if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))
                     buttonAccessible(mButtonDot,false)
@@ -136,6 +145,8 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     fun setInputConnection(ic: InputConnection?) {
         iConnection = ic
     }
+
+
 
     init {
         init(context, attrs)
