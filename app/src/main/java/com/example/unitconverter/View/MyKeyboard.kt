@@ -69,8 +69,8 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         mButton0!!.setOnClickListener(this)
         mButtonDelete!!.setOnClickListener(this)
         mButtonDot!!.setOnClickListener(this)
-
         mButtonDelete!!.setOnLongClickListener(this)
+
         mButtonDot?.isClickable = false
 
         // map buttons IDs to input strings
@@ -85,14 +85,15 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         keyValues.put(R.id.button_9, "9")
         keyValues.put(R.id.button_0, "0")
         keyValues.put(R.id.button_dot, ".")
-
-
     }
 
     override fun onLongClick(v: View?): Boolean {
+
         if (iConnection == null)
             return false
         val Text = iConnection!!.getExtractedText(ExtractedTextRequest(), 0).text
+
+       // iConnection!!.deleteSurroundingText(Text.length, 0)
         iConnection!!.deleteSurroundingText(Text.length, 0)
         return true
     }
@@ -110,31 +111,29 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         // All communication goes through the InputConnection
         if (v.id == R.id.button_delete) {
             val selectedText = iConnection!!.getSelectedText(0)
-            if (TextUtils.isEmpty(selectedText) ) {
+            if (TextUtils.isEmpty(selectedText)) {
                 // no selection, so delete previous character
                 iConnection!!.deleteSurroundingText(1, 0)
-                if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))
-                    buttonAccessible(mButtonDot,false)
+                //if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))
+                    //buttonAccessible(mButtonDot,false)
             } else {
                 // delete the selection
                 iConnection!!.commitText("", 1)
-                if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))
-                    buttonAccessible(mButtonDot,false)
+                //if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))
+                    //buttonAccessible(mButtonDot,false)
             }
         }
 
         else {
             val value = keyValues[v.id]
-            val currentText: CharSequence =
+           /* val currentText: CharSequence =
                 iConnection!!.getExtractedText(ExtractedTextRequest(), 0).text
-            if(!TextUtils.isEmpty(iConnection!!.getExtractedText(ExtractedTextRequest(),0).text) &&
-                        TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)) )
-                buttonAccessible(mButton0, false)
-            if(currentText == "0" && value != "."){
+
+            if(currentText == "0"){
                 iConnection!!.deleteSurroundingText(1, 0)
                 if(TextUtils.isEmpty(iConnection!!.getTextBeforeCursor(1,0)))
                     buttonAccessible(mButtonDot,false)
-            }
+            }*/
 
 
             iConnection!!.commitText(value, 1)
@@ -148,8 +147,6 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     fun setInputConnection(ic: InputConnection?) {
         iConnection = ic
     }
-
-
 
     init {
         init(context, attrs)

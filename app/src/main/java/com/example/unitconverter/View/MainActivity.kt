@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
             val intentToConverterScreen = Intent(this, ConverterActivity::class.java)
             intentToConverterScreen.putExtra("unitGroupName", R.array.speedUnits)
             startActivity(intentToConverterScreen)
-            Toast.makeText(this@MainActivity, "Yoo clicked speed", Toast.LENGTH_LONG).show()
+           // Toast.makeText(this@MainActivity, "Yoo clicked speed", Toast.LENGTH_LONG).show()
         }
 
         val weightButton = findViewById<Button>(R.id.main_activity_weight_button)
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             val intentToConverterScreen = Intent(this, ConverterActivity::class.java)
             intentToConverterScreen.putExtra("unitGroupName", R.array.weightUnits)
             startActivity(intentToConverterScreen)
-            Toast.makeText(this@MainActivity, "Yoo clicked weight", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this@MainActivity, "Yoo clicked weight", Toast.LENGTH_LONG).show()
         }
 
         val distanceButton = findViewById<Button>(R.id.main_activity_distance_button)
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             val intentToConverterScreen = Intent(this, ConverterActivity::class.java)
             intentToConverterScreen.putExtra("unitGroupName", R.array.distanceUnits)
             startActivity(intentToConverterScreen)
-            Toast.makeText(this@MainActivity, "Yoo clicked distance", Toast.LENGTH_LONG).show()
+         //   Toast.makeText(this@MainActivity, "Yoo clicked distance", Toast.LENGTH_LONG).show()
         }
     }
 }
