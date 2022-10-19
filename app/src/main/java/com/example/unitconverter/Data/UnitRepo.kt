@@ -50,7 +50,7 @@ object UnitRepo {
     private val speedCollection: List<MyUnit> by lazy {
         listOf(
 
-            MyUnit(R.string.km_per_s, BigDecimal.valueOf(1.0E+3), UnitGroup.SPEED),
+            MyUnit(R.string.km_per_s, BigDecimal.valueOf(1.0E+5), UnitGroup.SPEED),
             MyUnit(R.string.cm_per_s, BigDecimal.valueOf(1.0), UnitGroup.SPEED),
             MyUnit(R.string.m_per_s, BigDecimal.valueOf(1.0E+2), UnitGroup.SPEED),
            // MyUnit(R.string.f_per_s, BigDecimal.valueOf(3.28084), UnitGroup.SPEED),

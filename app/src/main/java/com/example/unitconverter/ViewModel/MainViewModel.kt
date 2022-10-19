@@ -11,7 +11,7 @@ import javax.validation.constraints.Digits
 class MainViewModel : ViewModel() {
 
     //@Digits(integer=3, fraction=2)
-    private var valueFrom: MutableLiveData<BigDecimal> = MutableLiveData()
+     var valueFrom: MutableLiveData<BigDecimal> = MutableLiveData()
     var valueTo: MutableLiveData<BigDecimal> = MutableLiveData()
 
     var unitFrom: MutableLiveData<MyUnit> = MutableLiveData()

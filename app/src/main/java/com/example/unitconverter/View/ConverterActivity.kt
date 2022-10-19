@@ -149,8 +149,6 @@ class ConverterActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
                 val str = s.toString()
 
-                mainViewModel.convert()
-
             }
 
             override fun beforeTextChanged(
@@ -183,13 +181,19 @@ class ConverterActivity : AppCompatActivity() {
                     /*Toast.makeText(
                         this@ConverterActivity,str, Toast.LENGTH_SHORT
                     ).show()*/
+                    Toast.makeText(
+                        this@ConverterActivity, "leading zeros were removed", Toast.LENGTH_SHORT
+                    ).show()
                     editText.setText(str)
                     editText.setSelection(editText.text.length)
                 }
 
-                if(str.startsWith("0") && str.contains('.'))
+               /* if(str.startsWith("0") && str.contains('.'))
                 {
                     str = str.substring(1)
+                    Toast.makeText(
+                        this@ConverterActivity, "here", Toast.LENGTH_SHORT
+                    ).show()
                    // editText.setSelection(str.length)
 
 
@@ -199,7 +203,7 @@ class ConverterActivity : AppCompatActivity() {
                     //editText.setText(str)}
 
 
-               // }
+               // }*/
                 val convertedNum : BigDecimal =
                     if (str.isEmpty() || str.toBigDecimalOrNull() == null)
                         BigDecimal("0")
@@ -207,6 +211,16 @@ class ConverterActivity : AppCompatActivity() {
                         BigDecimal(str)
                 //editText.setText(convertedNum.toString())
                 mainViewModel.setValueFrom(convertedNum)
+                mainViewModel.convert()
+
+               /* Toast.makeText(
+                    this@ConverterActivity,"valueFrom" + mainViewModel.unitFrom.value?.let {
+                        getString(
+                            it.Name)
+                    } + "valueto" + mainViewModel.unitTo.value?.Name?.let { getString(it) }, Toast.LENGTH_SHORT
+                ).show()*/
+
+
             }
         })
 
@@ -233,7 +247,7 @@ class ConverterActivity : AppCompatActivity() {
                 val clip = ClipData.newPlainText("text label", textView.text)
                 clipboard.setPrimaryClip(clip)
             }
-            Toast.makeText(this, "Nuber Copied", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Number Copied", Toast.LENGTH_SHORT).show();
         }
 
         // on click paste button

@@ -11,6 +11,7 @@ import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputConnection
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.unitconverter.R
 
 
@@ -71,7 +72,7 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         mButtonDot!!.setOnClickListener(this)
         mButtonDelete!!.setOnLongClickListener(this)
 
-        mButtonDot?.isClickable = false
+        //mButtonDot?.isClickable = false
 
         // map buttons IDs to input strings
         keyValues.put(R.id.button_1, "1")
@@ -85,6 +86,9 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         keyValues.put(R.id.button_9, "9")
         keyValues.put(R.id.button_0, "0")
         keyValues.put(R.id.button_dot, ".")
+    }
+    fun showToast(mContext: Context?, message: String?) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onLongClick(v: View?): Boolean {
@@ -123,9 +127,14 @@ class MyKeyboard(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
                     //buttonAccessible(mButtonDot,false)
             }
         }
-
         else {
-            val value = keyValues[v.id]
+            if(v.id == R.id.button_dot) {
+                val currentText: CharSequence =
+                    iConnection!!.getExtractedText(ExtractedTextRequest(), 0).text
+                if (currentText.toString().contains('.'))
+                    showToast(context.applicationContext, "you can't enter second dot")
+            }
+                val value = keyValues[v.id]
            /* val currentText: CharSequence =
                 iConnection!!.getExtractedText(ExtractedTextRequest(), 0).text
 
